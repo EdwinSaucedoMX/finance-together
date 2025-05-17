@@ -10,7 +10,6 @@ use Livewire\Component;
 
 class Movements extends Component
 {
-    public $categories = [];
     public $concept = '';
     public $date = '';
     public $category = '';
@@ -21,12 +20,16 @@ class Movements extends Component
 
     public function mount()
     {
-        $this->categories = Category::all();
         $this->date = date('Y-m-d');
     }
     public function render()
     {
         return view('livewire.movements');
+    }
+
+    public function updateType($type)
+    {
+        $this->type = $type;
     }
     public function setMovement($id)
     {
@@ -106,6 +109,14 @@ class Movements extends Component
         if ($movement) {
             $movement->delete();
         }
+    }
+    #[Computed]
+    public function categories()
+    {
+        if ($this->type == '') {
+            return Category::all();
+        }
+        return Category::all()->where('type', $this->type);
     }
 
     #[Computed]
