@@ -10,7 +10,6 @@ class Movement extends Model
         'user_id',
         'group_id',
         'category_id',
-        'description',
         'amount',
         'concept',
         'type',
