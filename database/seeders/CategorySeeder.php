@@ -13,8 +13,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('categories')->insert([
-            // Expenses
+        $categories = [
             ['name' => 'Food', 'description' => 'Groceries, restaurants, snacks'],
             ['name' => 'Transportation', 'description' => 'Gas, public transport, car maintenance'],
             ['name' => 'Health', 'description' => 'Medicines, doctor visits, health insurance'],
@@ -22,13 +21,18 @@ class CategorySeeder extends Seeder
             ['name' => 'Entertainment', 'description' => 'Movies, concerts, subscriptions'],
             ['name' => 'Housing', 'description' => 'Rent, utilities, home maintenance'],
             ['name' => 'Clothing', 'description' => 'Clothes and shoes'],
-
-            // Income
             ['name' => 'Salary', 'description' => 'Monthly income from work'],
             ['name' => 'Freelance', 'description' => 'Freelance or contract work income'],
             ['name' => 'Investments', 'description' => 'Returns from investments, dividends'],
             ['name' => 'Gifts', 'description' => 'Money received as gifts'],
             ['name' => 'Other Income', 'description' => 'Other miscellaneous income'],
-        ]);
+        ];
+
+        foreach ($categories as $category) {
+            DB::table('categories')->updateOrInsert(
+                ['name' => $category['name']],
+                ['description' => $category['description']]
+            );
+        }
     }
 }

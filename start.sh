@@ -3,6 +3,8 @@
 
 echo "Iniciando servidor de desarrollo de Laravel..."
 
+php artisan db:seed
+
 # Iniciar el servidor de Laravel en segundo plano
 php artisan serve &
 

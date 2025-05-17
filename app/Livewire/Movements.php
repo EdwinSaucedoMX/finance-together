@@ -44,7 +44,6 @@ class Movements extends Component
 
     public function saveMovement()
     {
-        $this->reset();
         $this->validateMovement();
         if ($this->id) {
             $this->updateMovement($this->id);
@@ -91,6 +90,8 @@ class Movements extends Component
 
     public function openMovementModal()
     {
+        $this->reset(['concept', 'date', 'amount', 'type', 'id', 'category']);
+
         $this->modal('movement')->show();
     }
     public function closeMovementModal()
