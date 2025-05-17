@@ -3,42 +3,16 @@
     <div class="flex flex-col">
         <flux:button class="self-end" variant="primary" icon="plus" wire:click="openMovementModal">New movement
         </flux:button>
-        <flux:modal name="movement" class="md:w-96">
-            <div class="space-y-6">
-                <div>
-                    <flux:heading size="lg">Add a movement</flux:heading>
-                    <flux:text class="mt-2">Create a movement.</flux:text>
-                </div>
-                <flux:input label="Date of movement" type="date" wire:model="date" />
-                <flux:field>
-                    <flux:label>Amount</flux:label>
-                    <flux:input.group>
-                        <flux:input.group.prefix>$</flux:input.group.prefix>
-                        <flux:input wire:model="amount" type="number" placeholder="1.00" />
-                    </flux:input.group>
-                    <flux:error name="amount" />
-                </flux:field>
-                <flux:textarea label="Concept" placeholder="Movement concept" wire:model="concept" />
-                <flux:select wire:model="type" label="Type">
-                    <flux:select.option value="" disabled selected>Select a type</flux:select.option>
-                    <flux:select.option value="IN">Income</flux:select.option>
-                    <flux:select.option value="OUT">Expense</flux:select.option>
-                </flux:select>
-                <div class="flex">
-                    <flux:spacer />
-                    <flux:button type="button" wire:click="saveMovement({{$id}})" variant="primary">Add</flux:button>
-                </div>
-            </div>
-        </flux:modal>
         <table class="mt-4 min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden shadow bg-white">
             <thead class="bg-gray-100">
                 <tr>
-
                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount
                     </th>
                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                         Concept</th>
+                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category
+                    </th>
                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
                     <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions
                     </th>
@@ -54,9 +28,12 @@
                         </td>
                         <td class="px-4 py-2">{{ $movement['concept'] }}</td>
                         <td class="px-4 py-2">
+                            {{ $movement['category_name'] }}
+                        </td>
+                        <td class="px-4 py-2">
                             <span
                                 class="inline-block px-2 py-1 text-xs font-semibold rounded
-                                                                                                                                                                                                                                                                        {{ $movement['type'] === 'IN' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                                                                                                                                                                                                                                                                                        {{ $movement['type'] === 'IN' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
                                 {{ $movement['type'] === 'IN' ? 'Income' : 'Expense' }}
                             </span>
                         </td>
@@ -86,4 +63,38 @@
         </table>
     </div>
 
+    {{-- Modals --}}
+    <flux:modal name="movement" class="md:w-96">
+        <div class="space-y-6">
+            <div>
+                <flux:heading size="lg">Add a movement</flux:heading>
+                <flux:text class="mt-2">Create a movement.</flux:text>
+            </div>
+            <flux:input label="Date of movement" type="date" wire:model="date" />
+            <flux:field>
+                <flux:label>Amount</flux:label>
+                <flux:input.group>
+                    <flux:input.group.prefix>$</flux:input.group.prefix>
+                    <flux:input wire:model="amount" type="number" placeholder="1.00" />
+                </flux:input.group>
+                <flux:error name="amount" />
+            </flux:field>
+            <flux:textarea label="Concept" placeholder="Movement concept" wire:model="concept" />
+            <flux:select wire:model="type" label="Type">
+                <flux:select.option value="" disabled selected>Select a type</flux:select.option>
+                <flux:select.option value="IN">Income</flux:select.option>
+                <flux:select.option value="OUT">Expense</flux:select.option>
+            </flux:select>
+            <flux:select label="Category" wire:model="category">
+                <flux:select.option value="" disabled selected>Select a category</flux:select.option>
+                @foreach($categories as $category)
+                    <flux:select.option value="{{ $category['id'] }}">{{ $category['name'] }}</flux:select.option>
+                @endforeach
+            </flux:select>
+            <div class="flex">
+                <flux:spacer />
+                <flux:button type="button" wire:click="saveMovement({{$id}})" variant="primary">Add</flux:button>
+            </div>
+        </div>
+    </flux:modal>
 </div>

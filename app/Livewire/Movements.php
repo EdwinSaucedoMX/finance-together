@@ -10,17 +10,20 @@ use Livewire\Component;
 
 class Movements extends Component
 {
+    public $categories = [];
     public $concept = '';
     public $date = '';
+    public $category = '';
 
-    public function mount()
-    {
-        $this->date = date('Y-m-d');
-    }
     public $amount = 0;
     public $type = '';
     public $id = null;
 
+    public function mount()
+    {
+        $this->categories = Category::all();
+        $this->date = date('Y-m-d');
+    }
     public function render()
     {
         return view('livewire.movements');
@@ -35,11 +38,13 @@ class Movements extends Component
             $this->date = date('Y-m-d', strtotime($movement['date']));
             $this->amount = abs($movement['amount']);
             $this->type = $movement['type'];
+            $this->category = $movement['category_id'];
         }
     }
 
     public function saveMovement()
     {
+        $this->reset();
         $this->validateMovement();
         if ($this->id) {
             $this->updateMovement($this->id);
@@ -62,7 +67,7 @@ class Movements extends Component
     {
         Movement::create([
             'user_id' => auth()->id(),
-            'category_id' => 1,
+            'category_id' => $this->category,
             'amount' => $this->amount,
             'concept' => $this->concept,
             'type' => $this->type,
@@ -79,6 +84,7 @@ class Movements extends Component
                 'concept' => $this->concept,
                 'type' => $this->type,
                 'date' => $this->date,
+                'category_id' => $this->category,
             ]);
         }
     }
@@ -104,7 +110,10 @@ class Movements extends Component
     #[Computed]
     public function movements()
     {
-        return Movement::where('user_id', auth()->id())->get();
+        return Movement::where('user_id', auth()->id())
+            ->leftJoin('categories', 'movements.category_id', '=', 'categories.id')
+            ->select('movements.*', 'categories.name as category_name')
+            ->get();
 
     }
     #[Computed]
