@@ -14,24 +14,31 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
-            ['name' => 'Food', 'description' => 'Groceries, restaurants, snacks'],
-            ['name' => 'Transportation', 'description' => 'Gas, public transport, car maintenance'],
-            ['name' => 'Health', 'description' => 'Medicines, doctor visits, health insurance'],
-            ['name' => 'Education', 'description' => 'Courses, tuition, books'],
-            ['name' => 'Entertainment', 'description' => 'Movies, concerts, subscriptions'],
-            ['name' => 'Housing', 'description' => 'Rent, utilities, home maintenance'],
-            ['name' => 'Clothing', 'description' => 'Clothes and shoes'],
-            ['name' => 'Salary', 'description' => 'Monthly income from work'],
-            ['name' => 'Freelance', 'description' => 'Freelance or contract work income'],
-            ['name' => 'Investments', 'description' => 'Returns from investments, dividends'],
-            ['name' => 'Gifts', 'description' => 'Money received as gifts'],
-            ['name' => 'Other Income', 'description' => 'Other miscellaneous income'],
+            ['name' => 'Food', 'description' => 'Groceries, restaurants, snacks', 'type' => 'OUT'],
+            ['name' => 'Transportation', 'description' => 'Gas, public transport, car maintenance', 'type' => 'OUT'],
+            ['name' => 'Health', 'description' => 'Medicines, doctor visits, health insurance', 'type' => 'OUT'],
+            ['name' => 'Education', 'description' => 'Courses, tuition, books', 'type' => 'OUT'],
+            ['name' => 'Entertainment', 'description' => 'Movies, concerts, subscriptions', 'type' => 'OUT'],
+            ['name' => 'Housing', 'description' => 'Rent, utilities, home maintenance', 'type' => 'OUT'],
+            ['name' => 'Clothing', 'description' => 'Clothes and shoes', 'type' => 'OUT'],
+            ['name' => 'Salary', 'description' => 'Monthly income from work', 'type' => 'IN'],
+            ['name' => 'Freelance', 'description' => 'Freelance or contract work income', 'type' => 'IN'],
+            ['name' => 'Investments', 'description' => 'Returns from investments, dividends', 'type' => 'IN'],
+            ['name' => 'Gifts', 'description' => 'Money received as gifts', 'type' => 'IN'],
+            ['name' => 'Other Income', 'description' => 'Other miscellaneous income', 'type' => 'IN'],
         ];
+
+        $now = now();
 
         foreach ($categories as $category) {
             DB::table('categories')->updateOrInsert(
                 ['name' => $category['name']],
-                ['description' => $category['description']]
+                [
+                    'description' => $category['description'],
+                    'type' => $category['type'],
+                    'created_at' => $now,
+                    'updated_at' => $now
+                ]
             );
         }
     }
