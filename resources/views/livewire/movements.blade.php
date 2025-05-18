@@ -3,56 +3,70 @@
     <div class="flex flex-col">
         <flux:button class="self-end" variant="primary" icon="plus" wire:click="openMovementModal">New movement
         </flux:button>
-        <table class="mt-4 min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden shadow bg-white">
-            <thead class="bg-gray-100">
+        <table
+            class="mt-4 min-w-full divide-y divide-gray-200 rounded-lg overflow-hidden shadow bg-white dark:bg-zinc-900 dark:divide-zinc-700">
+            <thead class="bg-gray-100 dark:bg-zinc-950">
                 <tr>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Amount
+                    <th
+                        class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-zinc-300">
+                        Date</th>
+                    <th
+                        class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-zinc-300">
+                        Amount
                     </th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th
+                        class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-zinc-300">
                         Concept</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Category
+                    <th
+                        class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-zinc-300">
+                        Category
                     </th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Type</th>
-                    <th class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions
+                    <th
+                        class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-zinc-300">
+                        Type</th>
+                    <th
+                        class="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase tracking-wider dark:text-zinc-300">
+                        Actions
                     </th>
                 </tr>
             </thead>
-            <tbody class="bg-white divide-y divide-gray-200">
+            <tbody class="bg-white divide-y divide-gray-200 dark:bg-zinc-900 dark:divide-zinc-700">
                 @foreach($this->movements as $movement)
                     <tr>
-                        <td class="px-4 py-2">{{ $movement['date'] }}</td>
+                        <td class="px-4 py-2 dark:text-zinc-200">{{ $movement['date'] }}</td>
                         <td
-                            class="px-4 py-2 {{ $movement['type'] === 'IN' ? 'text-green-600' : 'text-red-600' }} font-semibold">
+                            class="px-4 py-2 {{ $movement['type'] === 'IN' ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }} font-semibold">
                             ${{$movement['type'] === 'OUT' ? '-' : ''}}{{ number_format($movement['amount'], 2) }}
                         </td>
-                        <td class="px-4 py-2">{{ $movement['concept'] }}</td>
-                        <td class="px-4 py-2">
+                        <td class="px-4 py-2 dark:text-zinc-200">{{ $movement['concept'] }}</td>
+                        <td class="px-4 py-2 dark:text-zinc-200">
                             {{ $movement['category_name'] }}
                         </td>
                         <td class="px-4 py-2">
                             <span
                                 class="inline-block px-2 py-1 text-xs font-semibold rounded
-                                                                                                                                                                                                                                                                                                                                                {{ $movement['type'] === 'IN' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800' }}">
+                                                {{ $movement['type'] === 'IN' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' }}">
                                 {{ $movement['type'] === 'IN' ? 'Income' : 'Expense' }}
                             </span>
                         </td>
                         <td class="px-4 py-2 flex gap-2">
                             <flux:tooltip content="Edit movement" wire:click="setMovement('{{ $movement['id'] }}')">
-                                <flux:button class="*:text-blue-500" size="sm" variant="ghost" icon="pencil" title="Edit" />
+                                <flux:button class="*:text-blue-500 dark:*:text-blue-400" size="sm" variant="ghost"
+                                    icon="pencil" title="Edit" />
                             </flux:tooltip>
                             <flux:tooltip content="Delete movement">
-                                <flux:button class="*:text-red-500" size="sm" variant="ghost" icon="trash" color="danger"
-                                    title="Delete" wire:confirm="Are you sure you want to delete this movement?"
+                                <flux:button class="*:text-red-500 dark:*:text-red-400" size="sm" variant="ghost"
+                                    icon="trash" color="danger" title="Delete"
+                                    wire:confirm="Are you sure you want to delete this movement?"
                                     wire:click="deleteMovement('{{$movement['id']}}')" />
                             </flux:tooltip>
                         </td>
                     </tr>
                 @endforeach
             </tbody>
-            <tfoot class="bg-gray-50">
-                <tr>
-                <tr class="{{ $this->total >= 0 ? 'text-green-600' : 'text-red-600' }}">
+            <tfoot class="bg-gray-50 dark:bg-zinc-800">
+                <tr
+                    class="{{ $this->total >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
                     <td colspan="2" class="px-4 py-2 font-bold text-right">Total</td>
                     <td class="px-4 py-2 font-bold">
                         ${{ number_format($this->total, 2) }}

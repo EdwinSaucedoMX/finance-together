@@ -8,24 +8,47 @@
     <flux:input as="button" variant="filled" placeholder="Search..." icon="magnifying-glass" />
 
     <flux:navlist variant="outline">
-        <flux:navlist.item icon="home" href="/" current>Home</flux:navlist.item>
-        <flux:navlist.item icon="users" badge="12" href="#">Groups</flux:navlist.item>
-        <flux:navlist.item icon="banknotes" href="movements">Movements</flux:navlist.item>
-        <flux:navlist.item icon="wallet" href="#">Accounts</flux:navlist.item>
+        <flux:navlist.item icon="home" href="/" :current="request()->is('/')"
+            class="{{ request()->is('/') ? 'bg-zinc-200 dark:bg-zinc-800 font-semibold' : '' }}">Home
+        </flux:navlist.item>
+        <flux:navlist.item icon="users" badge="12" href="/groups/123" :current="request()->is('groups*')"
+            class="{{ request()->is('groups*') ? 'bg-zinc-200 dark:bg-zinc-800 font-semibold' : '' }}">Groups
+        </flux:navlist.item>
+        <flux:navlist.item icon="banknotes" href="/movements" :current="request()->is('movements')"
+            class="{{ request()->is('movements') ? 'bg-zinc-200 dark:bg-zinc-800 font-semibold' : '' }}">Movements
+        </flux:navlist.item>
+        <flux:navlist.item icon="wallet" href="/accounts" :current="request()->is('accounts')"
+            class="{{ request()->is('accounts') ? 'bg-zinc-200 dark:bg-zinc-800 font-semibold' : '' }}">Accounts
+        </flux:navlist.item>
     </flux:navlist>
 
     <flux:spacer />
 
     <flux:navlist variant="outline">
         <flux:navlist.item icon="cog-6-tooth" href="#">Settings</flux:navlist.item>
-        <flux:navlist.item icon="information-circle" href="#">Help</flux:navlist.item>
+        <flux:dropdown x-data align="end">
+            <flux:button variant="subtle" square class="group" aria-label="Preferred color scheme">
+                <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini"
+                    class="text-zinc-500 dark:text-white" />
+                <flux:icon.moon x-show="$flux.appearance === 'dark'" variant="mini"
+                    class="text-zinc-500 dark:text-white" />
+                <flux:icon.moon x-show="$flux.appearance === 'system' && $flux.dark" variant="mini" />
+                <flux:icon.sun x-show="$flux.appearance === 'system' && ! $flux.dark" variant="mini" />
+            </flux:button>
+            <flux:menu>
+                <flux:menu.item icon="sun" x-on:click="$flux.appearance = 'light'">Light</flux:menu.item>
+                <flux:menu.item icon="moon" x-on:click="$flux.appearance = 'dark'">Dark</flux:menu.item>
+                <flux:menu.item icon="computer-desktop" x-on:click="$flux.appearance = 'system'">System</flux:menu.item>
+            </flux:menu>
+        </flux:dropdown>
+
     </flux:navlist>
 
     <flux:dropdown position="top" align="start" class="max-lg:hidden">
         <flux:profile avatar="https://fluxui.dev/img/demo/user.png" name={{$name}} />
 
         <flux:menu>
-            <flux:menu.item icon="arrow-right-start-on-rectangle" wire:click="profile">
+            <flux:menu.item icon="user" wire:click="profile">
                 Profile
             </flux:menu.item>
             <flux:menu.separator />
