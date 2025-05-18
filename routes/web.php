@@ -2,6 +2,7 @@
 
 use App\Livewire\Groups;
 use App\Livewire\Movements;
+use App\Livewire\SpecificGroup;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Dashboard;
 
@@ -16,9 +17,12 @@ Route::get('movements', Movements::class)
     ->name('movements');
 
 
-Route::get('groups/{id}', Groups::class)
+Route::get('groups/{id}', SpecificGroup::class)
+    ->middleware(['auth', 'verified'])
+    ->name('specific-group');
+
+Route::get('groups', Groups::class)
     ->middleware(['auth', 'verified'])
     ->name('groups');
-
 
 require __DIR__ . '/auth.php';
