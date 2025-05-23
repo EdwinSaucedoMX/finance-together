@@ -8,6 +8,18 @@ use Livewire\Volt\Component;
 new #[Layout('layouts.guest')] class extends Component {
     public LoginForm $form;
 
+    public string $groupId = '';
+
+
+    public function mount(): void
+    {
+        // Check if email is on the query string
+        if (request()->has('email') && request()->get('groupId')) {
+            $this->groupId = request()->get('groupId');
+            $this->form->email = request()->get('email');
+        }
+
+    }
     /**
      * Handle an incoming authentication request.
      */
@@ -18,6 +30,17 @@ new #[Layout('layouts.guest')] class extends Component {
         $this->form->authenticate();
 
         Session::regenerate();
+
+
+        // If groupId is set, redirect to the specific group
+        if ($this->groupId) {
+            // User is already in the group, so just redirect
+            if (!auth()->user()->groups->contains($this->groupId)) {
+                auth()->user()->groups()->attach($this->groupId);
+            }
+            $this->redirect(route('specific-group', ['id' => $this->groupId]), navigate: true);
+            return;
+        }
 
         $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
     }

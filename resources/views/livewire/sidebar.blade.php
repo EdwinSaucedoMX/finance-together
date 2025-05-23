@@ -11,7 +11,8 @@
         <flux:navlist.item icon="home" href="/" :current="request()->is('/')"
             class="{{ request()->is('/') ? 'bg-zinc-200 dark:bg-zinc-800 font-semibold' : '' }}">Home
         </flux:navlist.item>
-        <flux:navlist.item icon="users" badge="12" href="/groups" :current="request()->is('groups*')"
+        <flux:navlist.item icon="users" badge="{{$this->userGroupsCount}}" href="/groups"
+            :current="request()->is('groups*')"
             class="{{ request()->is('groups*') ? 'bg-zinc-200 dark:bg-zinc-800 font-semibold' : '' }}">Groups
         </flux:navlist.item>
         <flux:navlist.item icon="banknotes" href="/movements" :current="request()->is('movements')"

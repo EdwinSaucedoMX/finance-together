@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Groups;
+use App\Livewire\JoinGroup;
 use App\Livewire\Movements;
 use App\Livewire\SpecificGroup;
 use Illuminate\Support\Facades\Route;
@@ -25,4 +26,11 @@ Route::get('groups', Groups::class)
     ->middleware(['auth', 'verified'])
     ->name('groups');
 
+
+Route::get('join', JoinGroup::class)->middleware(['canJoinGroup'])->name('join');
+
+
+Route::get('login', function () {
+    return view('auth.login');
+})->middleware('guest')->name('login');
 require __DIR__ . '/auth.php';
