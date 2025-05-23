@@ -5,7 +5,6 @@
     <flux:brand href="/" logo="/storage/icon.png" name="Finance Together" class="px-2 dark:hidden" />
     <flux:brand href="/" logo="/storage/icon.png" name="Finance Together" class="px-2 hidden dark:flex" />
 
-    <flux:input as="button" variant="filled" placeholder="Search..." icon="magnifying-glass" />
 
     <flux:navlist variant="outline">
         <flux:navlist.item icon="home" href="/" :current="request()->is('/')"
@@ -18,15 +17,20 @@
         <flux:navlist.item icon="banknotes" href="/movements" :current="request()->is('movements')"
             class="{{ request()->is('movements') ? 'bg-zinc-200 dark:bg-zinc-800 font-semibold' : '' }}">Movements
         </flux:navlist.item>
-        <flux:navlist.item icon="wallet" href="/accounts" :current="request()->is('accounts')"
+        {{-- <flux:navlist.item icon="wallet" href="/accounts" :current="request()->is('accounts')"
             class="{{ request()->is('accounts') ? 'bg-zinc-200 dark:bg-zinc-800 font-semibold' : '' }}">Accounts
-        </flux:navlist.item>
+        </flux:navlist.item> --}}
+        @if($canViewAdmin)
+            <flux:navlist.item icon="shield-check" href="/admin" :current="request()->is('admin')"
+                class="{{ request()->is('admin') ? 'bg-zinc-200 dark:bg-zinc-800 font-semibold' : '' }}">Admin
+            </flux:navlist.item>
+        @endif
     </flux:navlist>
 
     <flux:spacer />
 
     <flux:navlist variant="outline">
-        <flux:navlist.item icon="cog-6-tooth" href="#">Settings</flux:navlist.item>
+        {{-- <flux:navlist.item icon="cog-6-tooth" href="#">Settings</flux:navlist.item> --}}
         <flux:dropdown x-data align="end">
             <flux:button variant="subtle" square class="group" aria-label="Preferred color scheme">
                 <flux:icon.sun x-show="$flux.appearance === 'light'" variant="mini"

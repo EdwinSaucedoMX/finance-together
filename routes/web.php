@@ -38,7 +38,7 @@ require __DIR__ . '/auth.php';
 
 
 Route::get('admin', Admin::class)
-    ->middleware(['auth', 'verified'])
+    ->middleware(['auth', 'verified', 'isAdmin'])
     ->name('admin');
 
 

@@ -9,6 +9,7 @@ use Livewire\Component;
 class Sidebar extends Component
 {
     public $name;
+    public $canViewAdmin = false;
 
     public function mount()
     {
@@ -17,6 +18,7 @@ class Sidebar extends Component
 
     public function render()
     {
+        $this->canViewAdmin = auth()->user()->permissions()->pluck('name')->contains('ADMIN_PERMISSIONS');
         return view('livewire.sidebar');
     }
 
@@ -30,4 +32,6 @@ class Sidebar extends Component
     {
         return auth()->user()?->groups?->count() ?? 0;
     }
+
+
 }
