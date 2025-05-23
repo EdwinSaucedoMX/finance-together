@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardReportController;
 use App\Livewire\Admin;
 use App\Livewire\Groups;
 use App\Livewire\JoinGroup;
@@ -42,3 +43,4 @@ Route::get('admin', Admin::class)
     ->name('admin');
 
 
+Route::get('/dashboard/report/download', [DashboardReportController::class, 'download'])->name('dashboard.report.download');
