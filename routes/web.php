@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin;
 use App\Livewire\Groups;
 use App\Livewire\JoinGroup;
 use App\Livewire\Movements;
@@ -34,3 +35,10 @@ Route::get('login', function () {
     return view('auth.login');
 })->middleware('guest')->name('login');
 require __DIR__ . '/auth.php';
+
+
+Route::get('admin', Admin::class)
+    ->middleware(['auth', 'verified'])
+    ->name('admin');
+
+

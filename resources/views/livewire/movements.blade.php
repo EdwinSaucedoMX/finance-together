@@ -31,6 +31,14 @@
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200 dark:bg-zinc-900 dark:divide-zinc-700">
+                @if (count($this->movements) === 0)
+                    <tr>
+                        <td colspan="6" class="px-4 py-2 text-center text-gray-500 dark:text-zinc-300">
+                            No movements found.
+                        </td>
+                    </tr>
+
+                @endif
                 @foreach($this->movements as $movement)
                     <tr>
                         <td class="px-4 py-2 dark:text-zinc-200">{{ $movement['date'] }}</td>
@@ -45,7 +53,7 @@
                         <td class="px-4 py-2">
                             <span
                                 class="inline-block px-2 py-1 text-xs font-semibold rounded
-                                                {{ $movement['type'] === 'IN' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' }}">
+                                                    {{ $movement['type'] === 'IN' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' }}">
                                 {{ $movement['type'] === 'IN' ? 'Income' : 'Expense' }}
                             </span>
                         </td>

@@ -93,9 +93,12 @@ class Groups extends Component
         }
     }
 
+
+
     public function viewGroup($groupId)
     {
         // Redirect to the group view page
         return redirect()->route('specific-group', ['id' => $groupId]);
     }
+
 }

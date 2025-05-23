@@ -99,7 +99,15 @@ class SpecificGroup extends Component
     #[Computed]
     public function total()
     {
-        return $this->groupMovements->sum('amount');
+        $in = Movement::where('group_id', $this->id)
+            ->where('type', 'IN')
+            ->sum('amount');
+
+        $out = Movement::where('user_id', $this->id)
+            ->where('type', 'OUT')
+            ->sum('amount');
+
+        return $in - $out;
     }
 
     #[Computed]
