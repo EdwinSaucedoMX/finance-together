@@ -23,7 +23,7 @@
                     </svg>
                     Balance
                 </h2>
-                <div class="flex flex-col bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                <div class="flex flex-col bg-gray-50 dark:bg-gray-700 rounded-lg p-4 min-h-18 max-h-18">
                     <div class="flex justify-between items-center">
                         <span class="text-lg font-medium text-gray-700 dark:text-gray-200">
                             Balance
@@ -47,7 +47,7 @@
                     </svg>
                     Total Incomes
                 </h2>
-                <div class="flex flex-col bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                <div class="flex flex-col bg-gray-50 dark:bg-gray-700 rounded-lg p-4 min-h-18 max-h-18">
                     <div class="flex justify-between items-center">
                         <span class="text-lg font-medium text-gray-700 dark:text-gray-200">
                             Incomes
@@ -68,15 +68,26 @@
                     </svg>
                     Most Expensive Category
                 </h2>
-                <div class="flex flex-col bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <div class="flex justify-between items-center">
-                        <span class="text-lg font-medium text-gray-700 dark:text-gray-200">
-                            {{$mostExpensiveCategory->category_name}}
-                        </span>
-                        <span class="text-lg font-bold text-red-600 dark:text-red-400">
-                            ${{$mostExpensiveCategory->total}}
-                        </span>
-                    </div>
+                <div class="flex flex-col bg-gray-50 dark:bg-gray-700 rounded-lg p-4 min-h-18 max-h-18">
+                    @if ($mostExpensiveCategory)
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium text-gray-700 dark:text-gray-200">
+                                {{$mostExpensiveCategory?->category_name}}
+                            </span>
+                            <span class="text-lg font-bold text-red-600 dark:text-red-400">
+                                ${{$mostExpensiveCategory?->total}}
+                            </span>
+                        </div>
+                    @else
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium text-gray-700 dark:text-gray-200">
+                                No expenses
+                            </span>
+                            <span class="text-lg font-bold text-yellow-600 dark:text-yellow-400">
+                                $0.00
+                            </span>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -92,7 +103,7 @@
                     </svg>
                     Total Expenses
                 </h2>
-                <div class="flex flex-col bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
+                <div class="flex flex-col bg-gray-50 dark:bg-gray-700 rounded-lg p-4 min-h-18 max-h-18">
                     <div class="flex justify-between items-center">
                         <span class="text-lg font-medium text-gray-700 dark:text-gray-200">
                             Expenses
@@ -113,15 +124,26 @@
                     </svg>
                     Least Expensive Category
                 </h2>
-                <div class="flex flex-col bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-                    <div class="flex justify-between items-center">
-                        <span class="text-lg font-medium text-gray-700 dark:text-gray-200">
-                            {{$lessExpensiveCategory->category_name}}
-                        </span>
-                        <span class="text-lg font-bold text-yellow-600 dark:text-yellow-400">
-                            ${{$lessExpensiveCategory->total}}
-                        </span>
-                    </div>
+                <div class="flex flex-col bg-gray-50 dark:bg-gray-700 rounded-lg p-4 min-h-18 max-h-18">
+                    @if($lessExpensiveCategory)
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium text-gray-700 dark:text-gray-200">
+                                {{$lessExpensiveCategory?->category_name}}
+                            </span>
+                            <span class="text-lg font-bold text-yellow-600 dark:text-yellow-400">
+                                ${{$lessExpensiveCategory?->total}}
+                            </span>
+                        </div>
+                    @else
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-medium text-gray-700 dark:text-gray-200">
+                                No expenses
+                            </span>
+                            <span class="text-lg font-bold text-yellow-600 dark:text-yellow-400">
+                                $0.00
+                            </span>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

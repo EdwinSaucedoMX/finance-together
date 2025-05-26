@@ -13,13 +13,23 @@ class Groups extends Component
 
     public function render()
     {
+        // Check if the user is the oldest member of the group
         return view('livewire.groups');
     }
 
     #[Computed]
     public function groups()
     {
-        return auth()->user()->groups;
+        $user = auth()->user();
+        $groups = $user->groups;
+
+        // Check if the user is the oldest member in each group (by pivot 'created_at')
+        foreach ($groups as $group) {
+            $oldestMember = $group->users()->orderBy('pivot_created_at')->first();
+            $group->isOldest = $oldestMember && $oldestMember->id === $user->id;
+        }
+
+        return $groups;
     }
 
     public function openGroupModal()

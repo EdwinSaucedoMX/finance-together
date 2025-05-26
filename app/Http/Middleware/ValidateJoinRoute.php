@@ -33,7 +33,6 @@ class ValidateJoinRoute
             // Redirect to the register page
             return redirect()->route('register', ['email' => $email, 'groupId' => $groupId]);
         }
-
         // Check if is logged in
         if (auth()->check()) {
             // Check if the logged-in user is the same as the user with the email
@@ -51,12 +50,14 @@ class ValidateJoinRoute
                     return redirect()->route('specific-group', ['id' => $groupId]);
                 }
             }
-        } else {
+        } else if (auth()->guest()) {
             // Log in the user
             return redirect()->route('login', ['email' => $email, 'groupId' => $groupId]);
+        } else {
+
+            return $next($request);
         }
 
 
-        return $next($request);
     }
 }

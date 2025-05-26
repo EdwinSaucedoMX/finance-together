@@ -26,20 +26,23 @@
                     <td class="px-4 py-2 dark:text-zinc-200">{{ $group->name }}</td>
                     <td class="px-4 py-2 dark:text-zinc-200">{{ $group->created_at->format('Y-m-d') }}</td>
                     <td class="px-4 py-2 flex gap-2">
-                        <flux:tooltip content="Edit group" wire:click="editGroup('{{ $group->id }}')">
-                            <flux:button class="*:text-blue-500 dark:*:text-blue-400" size="sm" variant="ghost"
-                                icon="pencil" title="Edit" />
-                        </flux:tooltip>
-                        <flux:tooltip content="Delete group">
-                            <flux:button class="*:text-red-500 dark:*:text-red-400" size="sm" variant="ghost" icon="trash"
-                                color="danger" title="Delete" wire:confirm="Are you sure you want to delete this group?"
-                                wire:click="deleteGroup('{{ $group->id }}')" />
-                        </flux:tooltip>
+                        @if($group->isOldest)
+                            <flux:tooltip content="Edit group" wire:click="editGroup('{{ $group->id }}')">
+                                <flux:button class="*:text-blue-500 dark:*:text-blue-400" size="sm" variant="ghost"
+                                    icon="pencil" title="Edit" />
+                            </flux:tooltip>
+                            <flux:tooltip content="Delete group">
+                                <flux:button class="*:text-red-500 dark:*:text-red-400" size="sm" variant="ghost" icon="trash"
+                                    color="danger" title="Delete" wire:confirm="Are you sure you want to delete this group?"
+                                    wire:click="deleteGroup('{{ $group->id }}')" />
+                            </flux:tooltip>
+                        @endif
                         <flux:tooltip content="View group">
                             <flux:button class="*:text-blue-500 dark:*:text-blue-400" size="sm" variant="ghost" icon="eye"
                                 title="View" wire:click="viewGroup('{{ $group->id }}')" />
                         </flux:tooltip>
                     </td>
+
                 </tr>
             @endforeach
         </tbody>

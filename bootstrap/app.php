@@ -12,8 +12,10 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        $middleware->alias(['canJoinGroup' => ValidateJoinRoute::class]);
         $middleware->alias(['isAdmin' => \App\Http\Middleware\ValidateIsAdmin::class]);
+    })
+    ->withMiddleware(function (Middleware $middleware) {
+        $middleware->alias(['canJoinGroup' => ValidateJoinRoute::class]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

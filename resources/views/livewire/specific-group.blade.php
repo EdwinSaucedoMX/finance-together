@@ -47,8 +47,6 @@
         Here are the movements associated with this group.
     </p>
     <flux:modal.trigger name="movement" class="mb-4">
-        {{--
-        wire:click="$emit('openModal', 'movement', {{ json_encode(['group_id' => $this->groupId]) }})"> --}}
         <flux:button variant="primary" icon="plus" size="sm">
             Add Movement
         </flux:button>
@@ -105,7 +103,7 @@
                     <td class="px-4 py-2">
                         <span
                             class="inline-block px-2 py-1 text-xs font-semibold rounded
-                                                                                                                                                                    {{ $movement['type'] === 'IN' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' }}">
+                                                                                                                                                                                {{ $movement['type'] === 'IN' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-300' : 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300' }}">
                             {{ $movement['type'] === 'IN' ? 'Income' : 'Expense' }}
                         </span>
                     </td>
@@ -113,15 +111,19 @@
                         {{ $movement['user_name'] }}
                     </td>
                     <td class="px-4 py-2 flex gap-2">
-                        <flux:tooltip content="Edit movement" wire:click="setMovement('{{ $movement['id'] }}')">
-                            <flux:button class="*:text-blue-500 dark:*:text-blue-400" size="sm" variant="ghost"
-                                icon="pencil" title="Edit" />
-                        </flux:tooltip>
-                        <flux:tooltip content="Delete movement">
-                            <flux:button class="*:text-red-500 dark:*:text-red-400" size="sm" variant="ghost" icon="trash"
-                                color="danger" title="Delete" wire:confirm="Are you sure you want to delete this movement?"
-                                wire:click="deleteMovement('{{$movement['id']}}')" />
-                        </flux:tooltip>
+                        @if($movement['user_id'] === auth()->user()->id)
+                            <flux:tooltip content="Edit movement" wire:click="setMovement('{{ $movement['id'] }}')">
+                                <flux:button class="*:text-blue-500 dark:*:text-blue-400" size="sm" variant="ghost"
+                                    icon="pencil" title="Edit" />
+                            </flux:tooltip>
+                            <flux:tooltip content="Delete movement">
+                                <flux:button class="*:text-red-500 dark:*:text-red-400" size="sm" variant="ghost" icon="trash"
+                                    color="danger" title="Delete" wire:confirm="Are you sure you want to delete this movement?"
+                                    wire:click="deleteMovement('{{$movement['id']}}')" />
+                            </flux:tooltip>
+                        @else
+                            <p>-</p>
+                        @endif
                     </td>
                 </tr>
             @endforeach
