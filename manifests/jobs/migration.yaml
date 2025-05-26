@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: laravel-migrate-seed
+spec:
+  template:
+    spec:
+      containers:
+      - name: migrate
+        image: finance-together:latest
+        imagePullPolicy: Never
+        command: [ "php", "artisan", "migrate", "--seed", "--force" ]
+        env:
+        - name: DB_HOST
+          value: mysql
+        - name: DB_DATABASE
+          value: finance-together
+        - name: DB_USERNAME
+          value: root
+        - name: DB_PASSWORD
+          value: admin
+      restartPolicy: OnFailure

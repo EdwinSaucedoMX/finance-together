@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: finance-together
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: finance-together
+  template:
+    metadata:
+      labels:
+        app: finance-together
+    spec:
+      initContainers:
+      - name: init-storage
+        image: bitnami/laravel:12.0.8-debian-12-r1
+        command:
+        - /bin/bash
+        - -c
+        - |
+          mkdir -p /app/storage/framework/{cache,sessions,views} /app/storage/logs &&
+          chown -R 1001:0 /app/storage &&
+          chmod -R 775 /app/storage
+        volumeMounts:
+        - name: storage
+          mountPath: /app/storage
+      containers:
+      - name: finance-together
+        image: finance-together:latest
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8000
+        env:
+        - name: APP_URL
+          value: "https://financial-together.edwinsaucedo.me"
+        - name: APP_NAME
+          value: "Finance-Together"
+        - name: APP_KEY
+          value: "base64:0x5ZQUKInXwLTeI1LxpbpMIPq8mJrCFCM5oLvc38xCA="
+        - name: APP_ENV
+          value: "production"
+        - name: APP_DEBUG
+          value: "false"
+        - name: DB_HOST
+          value: "mysql"
+        - name: DB_PORT
+          value: "3306"
+        - name: DB_DATABASE
+          value: "finance-together"
+        - name: DB_USERNAME
+          value: "root"
+        - name: DB_PASSWORD
+          value: "admin"
+        - name: MAIL_MAILER
+          value: "smtp"
+        - name: MAIL_SCHEME
+          value: null
+        - name: MAIL_HOST
+          value: "live.smtp.mailtrap.io"
+        - name: MAIL_PORT
+          value: "587"
+        - name: MAIL_USERNAME
+          value: "api"
+        - name: MAIL_PASSWORD
+          value: "9b36158e4bfcd1cbfb03868c7cd82b7f"
+        - name: VITE_APP_NAME
+          value: "finance-together"
+        volumeMounts:
+        - name: storage
+          mountPath: /app/storage
+      volumes:
+      - name: storage
+        hostPath:
+          path: /data/finance-storage
+          type: DirectoryOrCreate
