@@ -33,7 +33,7 @@ spec:
         - containerPort: 8000
         env:
         - name: APP_URL
-          value: "https://financial-together.edwinsaucedo.me"
+          value: "https://finance-together.edwinsaucedo.me"
         - name: APP_NAME
           value: "Finance-Together"
         - name: APP_KEY
