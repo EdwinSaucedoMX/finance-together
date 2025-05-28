@@ -32,6 +32,8 @@ spec:
         ports:
         - containerPort: 8000
         env:
+        - name: SESSION_DRIVER
+          value: file
         - name: APP_URL
           value: "https://finance-together.edwinsaucedo.me"
         - name: APP_NAME
